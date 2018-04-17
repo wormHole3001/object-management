@@ -209,6 +209,15 @@ function object-management()
 #################################################################################################################################################################
   if ($delete)
   {
-    # Deleting stuff
+    if ($object -eq "ou")
+    {
+      Write-Host "OU Removal Center"
+      # Validating if file Exists
+      while ((Test-Path $filePath) -eq $false)
+      {
+        Write-Host "Error! File does not exist" -ForegroundColor Red -BackgroundColor -Black
+        # pass 
+      }
+    }
   }
 }
