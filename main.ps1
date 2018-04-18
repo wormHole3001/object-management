@@ -244,12 +244,14 @@ function object-management()
                       $path = $ou.DistinguishedName
                       Get-ADOrganizationalUnit -Identity $path | Set-ADObject -ProtectedFromAccidentalDeletion:$false -PassThru | Remove-ADOrganizationalUnit -Confirm:$false
                   }
+                  Write-Host "OUs removed" -ForegroundColor Green -BackgroundColor Black
               }
           }
           # Removing OU manually
           if ($F -eq $false)
           {
-              # Code to remove ou manually
+              $ouPath = Read-Host "Enter OU distinguished name"
+              Get-ADOrganizationalUnit -Identity $path | Set-ADObject -ProtectedFromAccidentalDeletion:$false -PassThru | Remove-ADOrganizationalUnit -Confirm:$false
           }
       }
       # Remove Users
