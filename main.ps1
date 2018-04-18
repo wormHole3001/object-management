@@ -239,7 +239,12 @@ function object-management()
               {
                   $ouFile = Import-Csv $filePath
                   Write-Host "File Validated" -ForegroundColor Green -BackgroundColor Black
-                  # Code to remove OUs from csv file
+                  $ous = import-csv $filePath
+                  foreach ($ou in $ous)
+                  {
+                      $path = $ou.DistinguishedName
+                      Set-ADObject -ProtectedFromAccidentalDeletion:$false -PassThru | Remove-ADOrganizationalUnit -Confirm:$false
+                  }
               }
           }
           # Removing OU manually
