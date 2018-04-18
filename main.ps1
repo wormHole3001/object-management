@@ -237,7 +237,6 @@ function object-management()
               }
               if ((Test-Path $filePath) -eq $true)
               {
-                  $ouFile = Import-Csv $filePath
                   Write-Host "File Validated" -ForegroundColor Green -BackgroundColor Black
                   $ous = import-csv $filePath
                   foreach ($ou in $ous)
