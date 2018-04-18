@@ -6,6 +6,8 @@
   Assigned: Tuesday, April 3, 2018
   
   Due: Tuesday, April 17, 2018 11:59pm
+  
+  Use 'get-help' for info on the function
 
 # SYNOPSIS
 Powershell script for creating and removing objects.
