@@ -1,4 +1,17 @@
-﻿
+﻿<#
+
+.SYNOPSIS
+Powershell script for creating and removing objects.
+
+.DESCRIPTION
+Powershell script to manage the following the following objects: OUs, Users, and Groups. The only two options are to either create or remove
+
+.EXAMPLE
+object-management -create -object ou -F -filePath file.csv
+
+Creates new OUs from the csv file specifed.
+
+#>
 function object-management()
 {
     param(
@@ -209,15 +222,59 @@ function object-management()
 #################################################################################################################################################################
   if ($delete)
   {
-    if ($object -eq "ou")
-    {
-      Write-Host "OU Removal Center"
-      # Validating if file Exists
-      while ((Test-Path $filePath) -eq $false)
+      # Remove OUs
+      if ($object -eq "ou")
       {
-        Write-Host "Error! File does not exist" -ForegroundColor Red -BackgroundColor -Black
-        # pass 
+          Write-Host "OU Removal Center" -ForegroundColor Green -BackgroundColor Black
+          # Removing from csv file
+          if ($F)
+          {
+              # Validating that file exists
+              while ((Test-Path $filePath) -eq $false)
+              {
+                  Write-Host "Error! File does not exists" -ForegroundColor Red -BackgroundColor Black
+                  $filePath = Read-Host "If file is not in current directory enter full path, else check file name" 
+              }
+              if ((Test-Path $filePath) -eq $true)
+              {
+                  $ouFile = Import-Csv $filePath
+                  Write-Host "File Validated" -ForegroundColor Green -BackgroundColor Black
+                  # Code to remove OUs from csv file
+              }
+          }
+          # Removing OU manually
+          if ($F -eq $false)
+          {
+              # Code to remove ou manually
+          }
       }
-    }
-  }
+      # Remove Users
+      elseif ($object -eq "users")
+      {
+          Write-Host "User Removal Center" -ForegroundColor Green -BackgroundColor Black
+          if ($F)
+          {
+              # Code to remove users with csv file
+          }
+          elseif ($F -eq $false)
+          {
+              # Code to remove users manually
+          }
+      }
+      # Remove Groups
+      elseif ($object -eq "groups")
+      {
+          Write-Host "Group Removal Center" -ForegroundColor Green -BackgroundColor Black
+          # Removing groups from csv
+          if ($F)
+          {
+              # code to remove groups with csv
+          }
+          # Removing groups manually
+          elseif ($F -eq $false)
+          {
+              # Remove users manually
+          }
+      }
+  } # delete if
 }
