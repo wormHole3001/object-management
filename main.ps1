@@ -260,12 +260,12 @@ function object-management()
           Write-Host "User Removal Center" -ForegroundColor Green -BackgroundColor Black
           if ($F)
           {
-              if ((Test-Path $filePath) -eq $false)
+              while ((Test-Path $filePath) -eq $false)
               {
                   Write-Host "Error! File not found" -ForegroundColor Red -BackgroundColor Black
                   $filePath = Read-Host "If file is in a different path enter full path. Else double check file name"
               }
-              elseif ((Test-Path $filePath) -eq $true)
+              if ((Test-Path $filePath) -eq $true)
               {
                   Write-Host "File found!" -ForegroundColor Green -BackgroundColor Black
                   $users = Import-Csv $filePath
@@ -289,12 +289,29 @@ function object-management()
           # Removing groups from csv
           if ($F)
           {
-              # code to remove groups with csv
+              # Checking file exists
+              while ((Test-Path $filePath) -eq $false)
+              {
+                  Write-Host "Error! File does not exists" -ForegroundColor Red -BackgroundColor Black
+                  $filePath = Read-Host "If file does not exists enter full path. Else check file name"
+              }
+              if ((Test-Path $filePath) -eq $true)
+              {
+                  Write-Host "File Verified" -ForegroundColor Green -BackgroundColor Black
+                  $groups = Import-Csv $filePath
+                  foreach ($group in $groups)
+                  {
+                      $path = $group.DistinguishedName
+                      Remove-ADGroup -Identity $path
+                  }
+                  Write-Host "Groups Delted" -ForegroundColor Green -BackgroundColor Black
+              }
           }
           # Removing groups manually
-          elseif ($F -eq $false)
+          if ($F -eq $false)
           {
-              # Remove users manually
+              $path = Read-Host "Enter the groups distinguished name"
+              Remove-ADGroup -Identity $path
           }
       }
   } # delete if
