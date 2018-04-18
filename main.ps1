@@ -260,11 +260,26 @@ function object-management()
           Write-Host "User Removal Center" -ForegroundColor Green -BackgroundColor Black
           if ($F)
           {
-              # Code to remove users with csv file
+              if ((Test-Path $filePath) -eq $false)
+              {
+                  Write-Host "Error! File not found" -ForegroundColor Red -BackgroundColor Black
+                  $filePath = Read-Host "If file is in a different path enter full path. Else double check file name"
+              }
+              elseif ((Test-Path $filePath) -eq $true)
+              {
+                  Write-Host "File found!" -ForegroundColor Green -BackgroundColor Black
+                  $users = Import-Csv $filePath
+                  foreach ($user in $users)
+                  {
+                      $SAM = $user.SamAccountName
+                      Remove-ADUser $SAM
+                  }
+              }
           }
           elseif ($F -eq $false)
           {
-              # Code to remove users manually
+              $SAM = Read-Host "Enter sam account for user"
+              Remove-ADUser $SAM
           }
       }
       # Remove Groups
