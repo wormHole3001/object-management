@@ -243,7 +243,7 @@ function object-management()
                   foreach ($ou in $ous)
                   {
                       $path = $ou.DistinguishedName
-                      Set-ADObject -ProtectedFromAccidentalDeletion:$false -PassThru | Remove-ADOrganizationalUnit -Confirm:$false
+                      Get-ADOrganizationalUnit -Identity $path | Set-ADObject -ProtectedFromAccidentalDeletion:$false -PassThru | Remove-ADOrganizationalUnit -Confirm:$false
                   }
               }
           }
